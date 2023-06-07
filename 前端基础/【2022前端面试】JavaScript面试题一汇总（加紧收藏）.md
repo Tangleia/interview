@@ -292,6 +292,10 @@ JavaScript中Number.MAX_SAFE_INTEGER表示最⼤安全数字，计算结果是90
 
 ## 二、ES6
 
+### 1、执行上下文和执行栈
+
+
+
 ### 1. let、const、var的区别
 
 **（1）块级作用域：** 块作用域由 `{ }`包括，let和const具有块级作用域，var不存在块级作用域。块级作用域解决了ES5中的两个问题：
