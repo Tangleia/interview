@@ -1,4 +1,6 @@
-# 【2022前端面试】JavaScript面试题一汇总（加紧收藏）
+![JavaScript面试题汇总](https://guizimo.oss-cn-shanghai.aliyuncs.com/img/JavaScript%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB.png)
+
+# 
 
 
 

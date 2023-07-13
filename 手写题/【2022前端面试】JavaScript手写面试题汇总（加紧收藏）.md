@@ -100,15 +100,39 @@ Function.prototype.myApply = function (context, argsArray) {
 **代码实现**：
 
 ```js
-Function.prototype.myBind = function (context, ...args) {
-  const fn = this;
-  return function (...newArgs) {
-    return fn.apply(context, [...args, ...newArgs]);
-  };
+/**
+ * 手写bind
+ * @returns {function(): any}
+ */
+Function.prototype.myBind = function () {
+  // 处理函数
+  let args = Array.from(arguments);
+  let thisArg = args.shift();
+  // 暂存this
+  let thisFunc = this;
+  // 因为需要构造函数，所以不能是匿名函数了
+  const fBound = function () {
+    const newArgs = args.concat(Array.from(arguments));
+    // 判断是否为构造函数
+    thisArg = this instanceof fBound ? this : thisArg;
+    return thisFunc.apply(thisArg, newArgs);
+  }
+  // 直接将原函数的prototype赋值给绑定函数
+  fBound.prototype = this.prototype;
+  // 返回
+  return fBound;
 }
 ```
 
-这个方法是定义在`Function.prototype`对象上的，因此它可以作用于任何函数。它接受两个参数，`context`表示要指定的`this`对象，`args`表示要预置的参数。它首先将当前函数保存到`fn`变量中。然后返回一个新的函数，该函数会在调用时将`context`作为`this`对象，并将`args`和新的参数`newArgs`合并为一个新的参数数组，并调用`fn`函数。最后，将`fn`函数的执行结果返回给新的函数。
+**简述代码：**
+
+1. 通过`Array.from()`将`arguments`转化为数组对象，通过`shift()`取出`thisArg`。
+2. 使用`thisFunc`暂存当前函数的`this`。
+3. 创建一个闭包函数`fBound`，`newArgs`接收合并处理的`arguments`。
+4. 判断`fBound`是否为构造函数，如果是构造函数，返回闭包的`this`，反之，返回外部拿到的`thisArg`，使用`thisArg`来接收。
+5. 使用`thisFunc.apply`传递`thisArg`值和参数`newArgs`。
+6. 直接将原函数的`prototype`赋值给`fBound`。
+7. 返回`fBound`。
 
 ## 2、功能函数
 
